@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="div1">
+        <p>a</p>
+        <p>b</p>
+        <p>c</p>
+    </div>
+
+    <div id="div2">
+
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var div1 = document.getElementById("div1")
+            var numParas = div1.children.length;
+            var div2 = document.getElementById("div2")
+            div2.innerHTML = numParas;
+        });
+    </script>
+</body>
+</html>
