@@ -1,0 +1,28 @@
+Resposta: O innerHTML retorna o texto com formatação e com elementos HTML, já o textContent retorna o texto com formatações, mas sem elementos html.
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="texto">
+        Texto texto <span>elemento</span>.
+    </p>
+
+    <button onclick="mostrarInnerHTML()">innerHTML</button>
+    <button onclick="mostrarTextContent()">textContent</button>
+
+    <script>
+        function mostrarInnerHTML() {
+            alert(document.getElementById("texto").innerHTML)
+        }
+
+        function mostrarTextContent() {
+            alert(document.getElementById("texto").textContent)
+        }
+    </script>
+</body>
+</html>

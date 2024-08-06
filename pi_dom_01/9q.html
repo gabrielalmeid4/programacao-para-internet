@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Alterar Tamanho da Fonte</title>
+</head>
+<body>
+    <p>Texto texto texto.</p>
+
+    <button id="botao">Aumentar</button>
+    <button id="botao2">Diminuir</button>
+
+    <script>
+        var botao = document.getElementById("botao")
+        var botao2 = document.getElementById("botao2")
+
+        botao.addEventListener("click", function() {
+            var body = document.body
+            body.style.fontSize = "40px"
+        });
+
+        botao2.addEventListener("click", function() {
+            var body = document.body
+            body.style.fontSize = "10px"
+        });
+    </script>
+</body>
+</html>
