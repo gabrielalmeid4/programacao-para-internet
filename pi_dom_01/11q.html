@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Adicionar Elementos</title>
+</head>
+<body>
+    <ul id="lista">
+
+    </ul>
+
+    <input type="text" id="texto">
+    <button id="botao">Adicionar um parágrafo à lista</button>
+
+    <script>
+        var botao = document.getElementById("botao");
+
+        botao.addEventListener("click", function() {
+            var lista = document.getElementById("lista");
+            var texto = document.getElementById("texto").value;
+            var novoItem = document.createElement("li");
+            novoItem.textContent = texto;
+
+            lista.appendChild(novoItem);
+        });
+    </script>
+</body>
+</html>

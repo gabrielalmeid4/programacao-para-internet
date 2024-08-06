@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Alterar Tamanho da Fonte</title>
+</head>
+<body>
+    <form>
+        <p>Escolha a operação:</p>
+        <input type="radio" id="soma" name="op" value="+">
+        <label for="soma">+</label><br>
+        
+        <input type="radio" id="subtracao" name="op" value="-">
+        <label for="corAzul">-</label><br>
+        
+        <input type="radio" id="multiplicacao" name="op" value="*">
+        <label for="corVerde">*</label><br>
+        
+        <input type="radio" id="divisao" name="op" value="/">
+        <label for="corAmarelo">/</label>
+    </form>
+
+    <input type="text" id = "num1">
+    <button id="botao">Calcular</button>
+    <input type="text" id = "num2">
+
+    <p>equivale a:</p> 
+    <input type="text" id = "resultado">
+<script>
+var botao = document.getElementById("botao")
+
+botao.addEventListener("click", function() {
+    var botoesRadio = document.querySelectorAll('input[name="op"]');
+    var operacao = null;
+    botoesRadio.forEach(function(botao) {
+        if (botao.checked) {
+            operacao = botao.value;
+        }
+    });
+
+    if (operacao) {
+        var num1 = Number(document.getElementById("num1").value)
+        var num2 = Number(document.getElementById("num2").value)
+        var resultado = document.getElementById("resultado")
+        switch(operacao) {
+            case "+":
+                resultado.value = num1 + num2
+                break;
+            case "-":
+                resultado.value = num1 - num2
+                break;
+            case "*":
+                resultado.value = num1 * num2
+                break;
+            case "/":
+                resultado.value = num1 / num2
+                break;
+            } 
+        } else {
+            alert("Escolha uma operação.")
+        }
+});
+</script>
+</body>

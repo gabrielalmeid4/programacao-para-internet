@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Adicionar Elementos 2</title>
+</head>
+<body>
+    <form>
+        <label for="frutas">Escolha uma fruta:</label>
+        <select id="frutas" name="frutas">
+            <option value="maçã">maçã</option>
+            <option value="banana">banana</option>
+        </select>
+        <input type="text" id="texto">
+        <button type="button" onclick="adicionarOpcao()">Adicionar Nova Fruta</button>
+    </form>
+
+    <script>
+        function adicionarOpcao() {
+            var fruta = document.getElementById("texto").value
+            var select = document.getElementById("frutas")
+            var novaOpcao = document.createElement("option")
+            novaOpcao.value = fruta;
+            novaOpcao.textContent = fruta
+
+            select.appendChild(novaOpcao)
+        }
+    </script>
+</body>
+</html>
