@@ -1,47 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import './Styles.css';
-import api from '../services/api';
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import './Styles.css'
+import api from '../services/api'
 
 interface Paciente {
-  cod_pac: number;
-  nome: string;
-  cpf: string;
+  cod_pac: number
+  nome: string
+  cpf: string
 }
 
 const PacienteList: React.FC = () => {
-  const [pacientes, setPacientes] = useState<Paciente[]>([]);
-  const [erro, setErro] = useState<string | null>(null);
-  const [nomeBusca, setNomeBusca] = useState('');
+  const [pacientes, setPacientes] = useState<Paciente[]>([])
+  const [erro, setErro] = useState<string | null>(null)
+  const [nomeBusca, setNomeBusca] = useState('')
 
   useEffect(() => {
     const fetchPacientes = async () => {
       try {
-        const response = await api.get('/pacientes');
-        setPacientes(response.data);
+        const response = await api.get('/pacientes')
+        setPacientes(response.data)
       } catch (error) {
-        setErro('Erro ao buscar pacientes');
-        console.error(error);
+        setErro('Erro ao buscar pacientes')
+        console.error(error)
       }
-    };
+    }
 
-    fetchPacientes();
-  }, []);
+    fetchPacientes()
+  }, [])
 
   const handleBusca = async () => {
     try {
       if (nomeBusca) {
-        const pacientesBusca = pacientes.filter(paciente => paciente.nome === nomeBusca || paciente.cpf === nomeBusca);
-        setPacientes(pacientesBusca);
+        const pacientesBusca = pacientes.filter(paciente => paciente.nome === nomeBusca || paciente.cpf === nomeBusca)
+        setPacientes(pacientesBusca)
       } else {
-        const response = await api.get('/pacientes');
-        setPacientes(response.data);
+        const response = await api.get('/pacientes')
+        setPacientes(response.data)
       }
     } catch (error) {
-      setErro('Erro ao buscar pacientes');
-      console.error(error);
+      setErro('Erro ao buscar pacientes')
+      console.error(error)
     }
-  };
+  }
 
   return (
     <div className="container">
@@ -49,7 +49,7 @@ const PacienteList: React.FC = () => {
       <div className="search-bar">
         <input
           type="text"
-          placeholder="Buscar por nome"
+          placeholder="Buscar"
           value={nomeBusca}
           onChange={(e) => setNomeBusca(e.target.value)}
         />
@@ -95,7 +95,7 @@ const PacienteList: React.FC = () => {
         </Link>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default PacienteList;
+export default PacienteList

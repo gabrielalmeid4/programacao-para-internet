@@ -5,7 +5,7 @@ import { Consulta } from '../entity/Consulta'
 export const getAllConsultas = async (req: Request, res: Response) => {
   try {
     const consultaRepository = AppDataSource.getRepository(Consulta)
-    const consultas = await consultaRepository.find({ relations: ['paciente'] })
+    const consultas = await consultaRepository.find()
     res.json(consultas)
   } catch (error) {
     res.status(500).json({ message: 'Erro ao obter consultas', error })
@@ -16,11 +16,6 @@ export const createConsulta = async (req: Request, res: Response) => {
     try {
       const consultaRepository = AppDataSource.getRepository(Consulta)
       const consultaData = req.body
-  
-      if (!consultaData.cod_pac || !consultaData.motivo || !consultaData.dt_prev_consulta || consultaData.valor === undefined) {
-        return res.status(400).json({ message: 'Dados insuficientes para criar a consulta' })
-      }
-
       const consulta = consultaRepository.create(consultaData)
   
       await consultaRepository.save(consulta)

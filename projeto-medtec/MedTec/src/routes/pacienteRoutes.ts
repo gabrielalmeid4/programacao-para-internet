@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { getAllPacientes, createPaciente, updatePaciente, deletePaciente, getPacienteById, getPacienteByName } from '../controllers/pacienteController'
+import { getAllPacientes, createPaciente, updatePaciente, deletePaciente, getPacienteById } from '../controllers/pacienteController'
 const router = Router()
 
 
@@ -8,6 +8,5 @@ router.get('/:id', getPacienteById)
 router.post('/', createPaciente)
 router.put('/:id', updatePaciente)
 router.delete('/:id', deletePaciente)
-router.get('/:nome', getPacienteByName)
 
 export default router

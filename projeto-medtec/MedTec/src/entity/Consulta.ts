@@ -7,9 +7,8 @@ export class Consulta {
     @PrimaryGeneratedColumn()
     cod_consul: number
 
-    @ManyToOne(() => Paciente)
-    @JoinColumn({ name: "cod_pac" })
-    paciente: Paciente
+    @Column({type: "integer"})
+    cod_pac: number
 
     @Column({ type: "text" })
     motivo: string

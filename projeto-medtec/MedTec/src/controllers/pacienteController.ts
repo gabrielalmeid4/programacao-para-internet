@@ -27,25 +27,6 @@ export const getPacienteById = async (req: Request, res: Response) => {
   }
 }
 
-export const getPacienteByName = async (req: Request, res: Response) => {
-  console.log('Pacientes encontrados')
-  const { nome } = req.params
-
-  try {
-    const pacienteRepository = AppDataSource.getRepository(Paciente)
-    const pacientes = await pacienteRepository.find({
-      where: {
-        nome: ILike(`%${nome}%`)
-      }
-    })
-
-    res.json(pacientes)
-  } catch (error) {
-    res.status(500).json({ message: 'Erro ao buscar pacientes', error })
-  }
-}
-
-
 export const createPaciente = async (req: Request, res: Response) => {
   try {
     const pacienteRepository = AppDataSource.getRepository(Paciente)
@@ -61,14 +42,14 @@ export const updatePaciente = async (req: Request, res: Response) => {
     try {
       const pacienteRepository = AppDataSource.getRepository(Paciente)
       const { id } = req.params 
-      const updatedData = req.body 
+      const updateDados = req.body 
 
       const paciente = await pacienteRepository.findOneBy({ cod_pac: parseInt(id) })
       if (!paciente) {
         return res.status(404).json({ message: 'Paciente não encontrado' })
       }
   
-      pacienteRepository.merge(paciente, updatedData)
+      pacienteRepository.merge(paciente, updateDados)
       await pacienteRepository.save(paciente)
       res.json(paciente)
     } catch (error) {

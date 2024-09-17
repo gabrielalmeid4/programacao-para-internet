@@ -1,50 +1,73 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import './Styles.css';
-import api from '../services/api';
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import './Styles.css'
+import api from '../services/api'
+
+interface Paciente {
+  cod_pac: number
+  nome: string
+  cpf: string
+}
 
 interface Consulta {
-  cod_consul: number;
-  motivo: string;
-  dt_prev_consulta: string;
-  dt_consul?: string;
-  valor: number;
-  status: boolean;
+  cod_consul: number
+  cod_pac: number
+  motivo: string
+  dt_prev_consulta: string
+  dt_consul?: string
+  valor: number
+  status: boolean
 }
 
 const ConsultaList: React.FC = () => {
-  const [consultas, setConsultas] = useState<Consulta[]>([]);
-  const [erro, setErro] = useState<string | null>(null);
-  const [nomeBusca, setNomeBusca] = useState('');
+  const [consultas, setConsultas] = useState<Consulta[]>([])
+  const [pacientes, setPacientes] = useState<Paciente[]>([])
+  const [erro, setErro] = useState<string | null>(null)
+  const [nomeBusca, setNomeBusca] = useState('')
 
   useEffect(() => {
     const fetchConsultas = async () => {
       try {
-        const response = await api.get('/consultas');
-        setConsultas(response.data);
+        const response = await api.get('/consultas')
+        setConsultas(response.data)
       } catch (error) {
-        setErro('Erro ao buscar consultas');
-        console.error(error);
+        setErro('Erro ao buscar consultas')
+        console.error(error)
       }
-    };
+    }
 
-    fetchConsultas();
-  }, []);
+    fetchConsultas()
+  }, [])
+
+  useEffect(() => {
+    const fetchPacientes = async () => {
+      try {
+        const response = await api.get('/pacientes')
+        setPacientes(response.data)
+      } catch (error) {
+        setErro('Erro ao buscar pacientes')
+        console.error(error)
+      }
+    }
+
+    fetchPacientes()
+  }, [])
 
   const handleBusca = async () => {
     try {
       if (nomeBusca) {
-        const consultasBusca = consultas.filter(consulta => consulta.cod_consul === parseInt(nomeBusca) || consulta.motivo.includes((nomeBusca)));
-        setConsultas(consultasBusca);
+        const consultasBusca = consultas.filter(consulta => consulta.cod_pac === parseInt(nomeBusca) || consulta.cod_consul === parseInt(nomeBusca) || 
+                                                consulta.motivo.includes((nomeBusca)) || pacientes.find(paciente => paciente.cod_pac === consulta.cod_pac)?.nome.includes(nomeBusca))
+        setConsultas(consultasBusca)
       } else {
-        const response = await api.get('/consultas');
-        setConsultas(response.data);
+        const response = await api.get('/consultas')
+        setConsultas(response.data)
       }
     } catch (error) {
-      setErro('Erro ao buscar consultas');
-      console.error(error);
+      setErro('Erro ao buscar consultas')
+      console.error(error)
     }
-  };
+  }
 
 
   return (
@@ -53,7 +76,7 @@ const ConsultaList: React.FC = () => {
       <div className="search-bar">
         <input
           type="text"
-          placeholder="Buscar por nome"
+          placeholder="Buscar"
           value={nomeBusca}
           onChange={(e) => setNomeBusca(e.target.value)}
         />
@@ -65,7 +88,9 @@ const ConsultaList: React.FC = () => {
         <table>
           <thead>
             <tr>
-              <th>Código</th>
+              <th>Código da Consulta</th>
+              <th>Código do Paciente</th>
+              <th>Nome do Paciente</th>
               <th>Motivo</th>
               <th>Data Prevista</th>
               <th>Data Realizada</th>
@@ -80,6 +105,8 @@ const ConsultaList: React.FC = () => {
               .map(consulta => (
                 <tr key={consulta.cod_consul}>
                   <td>{consulta.cod_consul}</td>
+                  <td>{consulta.cod_pac}</td> 
+                  <td>{pacientes.find(paciente => paciente.cod_pac === consulta.cod_pac)?.nome}</td> 
                   <td>{consulta.motivo}</td>
                   <td>{new Date(consulta.dt_prev_consulta).toLocaleDateString()}</td>
                   <td>{consulta.dt_consul ? new Date(consulta.dt_consul).toLocaleDateString() : 'Pendente'}</td>
@@ -100,7 +127,7 @@ const ConsultaList: React.FC = () => {
         </Link>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ConsultaList;
+export default ConsultaList
